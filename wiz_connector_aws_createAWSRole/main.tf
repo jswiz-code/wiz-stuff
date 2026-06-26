@@ -21,7 +21,7 @@ module "aws_wiz_role" {
 }
 
 
-# Create AWS CloudTrail trail, S3 bucket, sqs queue, and policies for enabling CloudTrail ingest in Wiz
+# Terraform from Wiz AWS Cloud Events enabled output for AWS CloutTrail
 module "aws_cloud_events" {
   source = "https://wizio-public.s3.amazonaws.com/deployment-v3/aws/terraform/2607/wiz-aws-cloud-events-terraform-module.zip"
   integration_type = "S3"
