@@ -1,0 +1,86 @@
+### QUERY ###
+
+query GetConnector($connectorId: ID!) {
+  connector(id: $connectorId) {
+    id
+    name
+    authParams
+    extraConfig
+    outpost {
+      id
+      config {
+        ... on OutpostAzureConfig {
+          environment
+        }
+      }
+    }
+    config {
+      ... on ConnectorConfigAWS {
+        region
+        customerRoleARN
+        awsEnvironment: environment
+        subAccountRole
+        diskAnalyzer {
+          scanner {
+            roleARN
+          }
+        }
+        scheduledSecurityToolScanningSettings {
+          ...ScheduledSecurityToolScanningSettingsFrag
+        }
+      }
+      ... on ConnectorConfigSnykV2 {
+        sca {
+          enabled
+        }
+        sast {
+          enabled
+        }
+        cli {
+          enabled
+        }
+        container {
+          enabled
+        }
+      }
+      ... on ConnectorConfigOVHCloud {
+        applicationKey
+        applicationSecret
+        consumerKey
+        endpoint
+      }
+      ... on ConnectorConfigCrusoe {
+        accessKeyId
+        secretKey
+      }
+      ... on ConnectorConfigKong {
+        kongRegion: region
+        systemAccountName
+        tokenName
+      }
+    }
+    type {
+      ...ConnectorTypeDetails
+    }
+  }
+}
+
+    fragment ScheduledSecurityToolScanningSettingsFrag on ScheduledSecurityToolScanningSettings {
+  enabled
+  publicBucketsScanningEnabled
+}
+
+
+
+    fragment ConnectorTypeDetails on ConnectorType {
+  id
+  name
+  authorizeUrls
+}
+
+
+### VARIABLES ###
+
+{
+  "connectorId": "[fill-with-your-id]"
+}
